@@ -55,4 +55,6 @@ fabric.properties
 
 securityapp.iml
 securitycore.iml
-.idea\
+.idea/
+securitybrowser.iml
+securitydemo.iml

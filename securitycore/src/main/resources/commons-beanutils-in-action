@@ -1,0 +1,67 @@
+BeanUtils 的 Java API 主要的 package 总共四项：
+1. org.apache.commons.beanutils；
+2. org.apache.commons.beanutils.converters；
+3. org.apache.commons.beanutils.locale；
+4. org.apache.commons.beanutils.locale.converters；
+
+后三个包主要是用于数据的转换，围绕着一个 Converter 接口，该接口只有一个方法：java.lang.Object convert(java.lang.Class type, java.lang.Object value) ，用于将一个 value转换成另一个类型为type的Object。例如：在将字符串类型的数据转换成日期类型时会使用此方法。
+
+【BeanUtils的使用】
+自定义数据类型使用BeanUtils工具时，本身必须具备getter和setter方法，因为BeanUtils工具本身也是一种内省的实现方法，所以也是借助于底层的getter和setter方法进行转换的。
+1、BeanUtils.setProperty(bean, name, value)：为指定bean实例的属性设值，等同于bean.setXXX()方法；其中bean是指你将要设置的对象，name指的是将要设置的属性（写成”属性名”）,value（想要设置的属性值）；
+2、BeanUtils.populate(bean,Map)：将Map集合中的数据注入到JavaBean的属性中去，其中Map中的key必须与目标对象中的属性名相同，否则不能实现拷贝；
+3、BeanUtils.copyProperties(newObject,oldObject)：实现对象之间的拷贝；
+4、ConvertUtils.register(Converter converter , Class clazz)：类型转换器注册方法，当需要将String数据转换成引用数据类型（自定义数据类型时例如Date类型），需要使用此方法实现转换；
+//注册String->日期类型转换器
+ConvertUtils.register(new Converter() {
+    @Override
+    public Object convert(Class type, Object value) {
+        if(type != Date.class) {
+            return null ;
+        }
+        if(value == null && "".equals(value.toString().trim())) {
+            return null ;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd") ;
+        Date date = null ;
+        try {
+            date = sdf.parse((String) value) ;
+        } catch (ParseException e) {
+            throw new RuntimeException(e) ;
+        }
+        return date;
+    }
+}, Date.class) ;
+BeanUtils.setProperty(user, "birthday", "2016-92-11") ;
+
+【PropertyUtils的使用】
+这个类和 BeanUtils 类很多的方法在参数上都是相同的，但返回值不同。BeanUtils 着重于”Bean”，返回值通常是 String，而PropertyUtils着重于属性，它的返回值通常是·Object。
+
+在 PropertyUtils 中会区分为三种method状态：
+1、Simple：如果你是用到primitive语法, 如int, String或其它自行开发的objects等等,只需要单一的对象就可以取得数据；
+PropertyUtils.getSimpleProperty(Object bean, String name);
+
+2、Indexed：如果你是用到Collection或List实作出来的objects , 只需要使用一个index数值就可以取得数据的型态；
+PropertyUtils.getIndexedProperty(Object bean, String name);
+PropertyUtils.getIndexedProperty(Object bean, String name, int index);
+PropertyUtils.setIndexedProperty(Object bean, String name, Object value);
+PropertyUtils.setIndexedProperty(Object bean, String name, int index, Object value);
+
+3、Mapped：如果你是用到Map延伸出来的objects, 只需要使用一个key值就可以取得数据；
+PropertyUtils.getMappedProperty(Object bean, String name);
+PropertyUtils.getMappedProperty(Object bean, String name, String key);
+PropertyUtils.setMappedProperty(Object bean, String name, Object value);
+PropertyUtils.setMappedProperty(Object bean, String name, String key, Object value);
+
+
+4、Nested：对于巢状(nested)的数据结构，可以通过"."连接获取对应的属性
+PropertyUtils.getNestedProperty(Object bean, String name);
+PropertyUtils.setNestedProperty(Object bean, String name, Object value);
+
+【ConstructorUtils、MethodUtil的使用】
+这个类中的方法主要分成两种，一种是得到构造方法，一种是创建对象。
+
+1、根据一个 java.lang.Class 以及相应的构造方法的参数，创建一个对象
+static java.lang.Object ConstructorUtils.invokeConstructor(java.lang.Class klass, java.lang.Object[] args) ;
+
+Object obj=ConstructorUtils.invokeConstructor(Month.class, {new Integer(1), "Jan"});
