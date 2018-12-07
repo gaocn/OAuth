@@ -10,7 +10,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>security-browser</artifactId>
+    <artifactId>security-app</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>govind</groupId>
+            <artifactId>security-core</artifactId>
+            <version>${security.version}</version>
+        </dependency>
+    </dependencies>
 </project>
