@@ -53,8 +53,8 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-securityapp.iml
-securitycore.iml
 .idea/
-securitybrowser.iml
-securitydemo.iml
+security-core.iml
+security-demo.iml
+security-browser.iml
+security-app.iml
