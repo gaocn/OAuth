@@ -23,6 +23,9 @@ public class PasswdValidator implements ConstraintValidator<CheckPasswd,String> 
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
+		if (value == null ||  value.trim().isEmpty()) {
+			return false;
+		}
 		String specialChars = "!@#$%^&*()";
 		Boolean containsDigit = false;
 		Boolean containsAlphabet = false;

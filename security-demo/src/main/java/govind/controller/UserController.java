@@ -2,6 +2,7 @@ package govind.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import govind.entity.User;
+import govind.exception.UserNotExistException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
@@ -32,14 +33,16 @@ public class UserController {
 	public User getInfo(@PathVariable(name = "id")String userid) {
 		System.out.println("userid: " + userid);
 
-		User user = new User();
-		user.setUsername("Tom");
-		return user;
+		throw new UserNotExistException(userid);
+
+//		User user = new User();
+//		user.setUsername("Tom");
+//		return user;
 	}
 
 	@PostMapping("/user")
 	@JsonView(User.UserDetailView.class)
-	public User create(@RequestBody User user) {
+	public User create(@Valid @RequestBody User user) {
 		System.out.println("user: " +user);
 		user.setUserid(1);
 		return user;

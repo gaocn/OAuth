@@ -6,6 +6,7 @@ import govind.annotations.CheckPasswd;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.sql.Date;
 
@@ -21,15 +22,20 @@ public class User {
 
 	private int userid;
 
+	@NotNull
 	@NotBlank
 	private String  username;
 
+	@NotNull
+	@NotBlank
 	@CheckPasswd
 	private String passwd;
 
 	/**
 	 * 标注时间为过去
 	 */
+	@NotNull
+	@NotBlank
 	@Past
 	private Date birthday;
 
