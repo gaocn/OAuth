@@ -3,6 +3,9 @@ package govind.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import govind.entity.User;
 import govind.exception.UserNotExistException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import java.util.List;
  * @Author: gvind
  */
 @RestController
+@Slf4j
 public class UserController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -28,14 +32,16 @@ public class UserController {
 		return users;
 	}
 
+	@ApiOperation(value = "获取单个用户详细信息")
 	@GetMapping("/user/{id:\\d+}")
 	@JsonView(User.UserSimpleView.class)
-	public User getInfo(@PathVariable(name = "id")String userid) {
+	public User getInfo(@ApiParam(value = "用户ID") @PathVariable(name = "id")String userid) {
 		System.out.println("userid: " + userid);
 
 //		throw new UserNotExistException(userid);
 		User user = new User();
 		user.setUsername("Tom");
+		log.info("服务处理中......");
 		return user;
 	}
 
