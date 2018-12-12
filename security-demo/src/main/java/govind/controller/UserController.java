@@ -33,11 +33,10 @@ public class UserController {
 	public User getInfo(@PathVariable(name = "id")String userid) {
 		System.out.println("userid: " + userid);
 
-		throw new UserNotExistException(userid);
-
-//		User user = new User();
-//		user.setUsername("Tom");
-//		return user;
+//		throw new UserNotExistException(userid);
+		User user = new User();
+		user.setUsername("Tom");
+		return user;
 	}
 
 	@PostMapping("/user")
