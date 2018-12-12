@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
@@ -35,5 +40,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return filterRegistrationBean;
 	}
 
-
+	@Override
+	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(2);
+		executor.setQueueCapacity(10);
+		executor.setKeepAliveSeconds(20);
+		configurer.setDefaultTimeout(5000);
+		executor.initialize();
+		configurer.setTaskExecutor(executor);
+	}
 }
