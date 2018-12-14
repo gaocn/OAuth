@@ -3,8 +3,10 @@ package govind.async;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +41,21 @@ public class AsyncOrderController {
 
 
 
+	@Autowired
+	private MockQueue produce;
+	@Autowired
+	private DeferredResultHolder deferredResultHolder;
 
-
-
-
-
-
+	@GetMapping("/order/{orderid}")
+	public @ResponseBody
+	DeferredResult<Map<String, String>> getOrder(@PathVariable String orderid) {
+		log.info("主线程开始");
+		produce.produceInQueue1(orderid);
+		DeferredResult<Map<String, String>> result =  new DeferredResult<>();
+		deferredResultHolder.getMap().put(orderid, result);
+ 		log.info("主线程结束");
+		return result;
+	}
 
 
 

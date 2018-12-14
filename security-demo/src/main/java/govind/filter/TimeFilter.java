@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import java.io.IOException;
 
+@Component
 @Slf4j
 public class TimeFilter implements Filter {
 
