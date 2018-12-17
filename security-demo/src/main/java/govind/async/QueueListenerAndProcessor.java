@@ -30,22 +30,13 @@ public class QueueListenerAndProcessor implements ApplicationListener<ContextRef
 				String orderid = null;
 				try {
 					orderid = consume.consumeInQueue1();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				} catch (TimeoutException e) {
-					e.printStackTrace();
+				} catch (Exception e) {
 				}
-				log.info("进入应用2线程，开始处理队列中的任务,获取订单号{}", orderid);
 				if(StringUtils.isEmpty(orderid) || StringUtils.isBlank(orderid)){
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					log.info("获取订单号超时，进行重试....");
 					continue;
 				}
+				log.info("进入应用2线程，开始处理队列中的任务,获取订单号{}", orderid);
 				Map<String, String> map = new HashMap<>();
 				map.put("orderid", orderid);
 				map.put("status","0");
