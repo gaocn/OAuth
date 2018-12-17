@@ -31,6 +31,7 @@ public class QueueListenerAndProcessor implements ApplicationListener<ContextRef
 				try {
 					orderid = consume.consumeInQueue1();
 				} catch (Exception e) {
+					continue;
 				}
 				if(StringUtils.isEmpty(orderid) || StringUtils.isBlank(orderid)){
 					log.info("获取订单号超时，进行重试....");

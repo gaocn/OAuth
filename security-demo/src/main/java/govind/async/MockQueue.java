@@ -32,6 +32,6 @@ public class MockQueue {
 				log.info("Queue-Thread[consumeInQueue1] dequeue order[{}]", orderid);
 				return orderid;
 		});
-		return result.get(60, TimeUnit.SECONDS);
+		return result.get(Long.MAX_VALUE, TimeUnit.SECONDS);
 	}
 }
