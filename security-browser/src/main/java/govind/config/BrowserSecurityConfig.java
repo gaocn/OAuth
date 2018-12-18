@@ -1,5 +1,7 @@
 package govind.config;
 
+import govind.handler.AuthenticationFailedHandler;
+import govind.handler.AuthenticationSuccessHandler;
 import govind.propeties.SecurityCoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,11 +22,20 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SecurityCoreProperties securityCoreProperties;
 
+	@Autowired
+	private AuthenticationFailedHandler authenticationFailedHandler;
+	@Autowired
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.formLogin()
+				//自定义登录界面
 				.loginPage("/authentication/require")
+				//自定义登录路径
 				.loginProcessingUrl("/authentication/form")
+				.successHandler(authenticationSuccessHandler)
+				.failureHandler(authenticationFailedHandler)
 				.and()
 				.authorizeRequests()
 				.antMatchers("/authentication/require",

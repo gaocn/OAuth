@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Aspect
+//@Aspect
 @Slf4j
-@Component
+//@Component
 public class TimeAspect {
 
 	@Around("execution(* govind.controller.UserController.*(..))")

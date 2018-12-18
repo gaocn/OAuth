@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 @Slf4j
-@Component
+//@Component
 public class TimeInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
