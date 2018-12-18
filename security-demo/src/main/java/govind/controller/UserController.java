@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -69,4 +70,10 @@ public class UserController {
 	public void delete(@PathVariable(name = "userid") String id) {
 		System.out.println("deleted userid["+ id +"]");
 	}
+
+	@GetMapping("/user/me")
+	public Object getCredential() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
+
 }
