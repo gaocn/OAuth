@@ -1,7 +1,9 @@
 package govind.controller;
 
+import govind.propeties.SecurityCoreProperties;
 import govind.response.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -26,6 +28,8 @@ public class BrowserSecurityController {
 
 	private RequestCache requestCache = new HttpSessionRequestCache();
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	@Autowired
+	private SecurityCoreProperties securityCoreProperties;
 
 	@RequestMapping("/authentication/require")
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
@@ -36,7 +40,8 @@ public class BrowserSecurityController {
 			log.info("引发跳转的请求为：{}", targetUrl);
 			if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")){
 				try {
-					redirectStrategy.sendRedirect(request, response, "");
+					log.info("跳转登录页：{}",securityCoreProperties.getBrowser().getLoginPage());
+					redirectStrategy.sendRedirect(request, response, securityCoreProperties.getBrowser().getLoginPage());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
