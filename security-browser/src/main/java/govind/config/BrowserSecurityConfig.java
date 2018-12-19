@@ -3,7 +3,7 @@ package govind.config;
 import govind.handler.AuthenticationFailedHandler;
 import govind.handler.AuthenticationSuccessHandler;
 import govind.propeties.SecurityCoreProperties;
-import govind.validate.code.ValidateCodeFilter;
+import govind.validate.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

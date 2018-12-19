@@ -1,4 +1,4 @@
-package govind.validate.code;
+package govind.validate;
 
 import govind.controller.ValidateCodeController;
 import govind.exception.ValidateCodeException;
@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.util.AntPathMatcher;

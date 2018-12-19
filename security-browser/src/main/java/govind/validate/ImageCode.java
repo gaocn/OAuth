@@ -1,4 +1,4 @@
-package govind.validate.code;
+package govind.validate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
