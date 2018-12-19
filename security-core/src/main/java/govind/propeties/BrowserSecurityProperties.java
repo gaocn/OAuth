@@ -13,4 +13,5 @@ import lombok.Setter;
 public class BrowserSecurityProperties {
 	private String loginPage  = "/login.html";
 	private String loginType = LoginType.REDIRECT;
+	private ValidateCodeProperties image = new ValidateCodeProperties();
 }

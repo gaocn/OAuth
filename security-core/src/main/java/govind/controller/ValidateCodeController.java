@@ -2,8 +2,10 @@ package govind.controller;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import govind.propeties.SecurityCoreProperties;
 import govind.validate.code.ImageCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +29,12 @@ import java.util.Random;
 @RestController
 @Slf4j
 public class ValidateCodeController {
-	private static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
+	public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
 
 	private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+
+	@Autowired
+	private SecurityCoreProperties securityCoreProperties;
 
 	@GetMapping("/code/image")
 	public void createImageCode(HttpServletRequest request, HttpServletResponse response) {
@@ -43,8 +48,8 @@ public class ValidateCodeController {
 	}
 
 	public ImageCode generate() {
-		int width = 67;
-		int height = 23;
+		int width = securityCoreProperties.getBrowser().getImage().getWidth();
+		int height = securityCoreProperties.getBrowser().getImage().getHeight();
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics g = image.getGraphics();
 
@@ -63,7 +68,7 @@ public class ValidateCodeController {
 		}
 
 		String sRand = "";
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < securityCoreProperties.getBrowser().getImage().getLength(); i++) {
 			String rand = String.valueOf(random.nextInt(10));
 			sRand += rand;
 			g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
@@ -72,7 +77,7 @@ public class ValidateCodeController {
 
 		g.dispose();
 
-		return new ImageCode(image, sRand, 60L);
+		return new ImageCode(image, sRand, securityCoreProperties.getBrowser().getImage().getExpireIn());
 	}
 
 	/**
