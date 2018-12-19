@@ -33,10 +33,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.social</groupId>
-            <artifactId>spring-social-govind.security.config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-core</artifactId>
         </dependency>
         <dependency>
