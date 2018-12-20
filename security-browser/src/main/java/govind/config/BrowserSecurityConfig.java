@@ -9,16 +9,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
-
-
-
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -31,6 +32,22 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	private AuthenticationFailedHandler authenticationFailedHandler;
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+		tokenRepository.setDataSource(dataSource);
+		//只能执行一次，用于创建数据库表保存remember-me的用户
+//		tokenRepository.setCreateTableOnStartup(true);
+		return tokenRepository;
+	}
+
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -48,6 +65,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginProcessingUrl("/authentication/form")
 				.successHandler(authenticationSuccessHandler)
 				.failureHandler(authenticationFailedHandler)
+				.and()
+				.rememberMe()
+				.tokenRepository(persistentTokenRepository())
+				.tokenValiditySeconds(securityCoreProperties.getBrowser().getRememberMeSeconds())
+				.userDetailsService(userDetailsService)
 				.and()
 				.authorizeRequests()
 				.antMatchers("/authentication/require",
