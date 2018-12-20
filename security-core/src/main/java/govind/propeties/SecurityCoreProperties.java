@@ -13,6 +13,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @AllArgsConstructor
 public class SecurityCoreProperties {
 	private BrowserSecurityProperties browser = new BrowserSecurityProperties();
-
+	private ValidateCodeProperties sms = new ValidateCodeProperties();
 
 }

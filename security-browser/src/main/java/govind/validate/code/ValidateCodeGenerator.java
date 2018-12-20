@@ -1,7 +1,7 @@
 package govind.validate.code;
 
-import govind.validate.ImageCode;
+import govind.validate.ValidateCode;
 
 public interface ValidateCodeGenerator {
-	ImageCode generate();
+	ValidateCode generate();
 }

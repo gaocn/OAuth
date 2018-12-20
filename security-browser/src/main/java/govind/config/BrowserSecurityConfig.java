@@ -3,7 +3,7 @@ package govind.config;
 import govind.handler.AuthenticationFailedHandler;
 import govind.handler.AuthenticationSuccessHandler;
 import govind.propeties.SecurityCoreProperties;
-import govind.validate.ValidateCodeFilter;
+import govind.validate.ImageValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +52,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//添加验证码过滤器
-		ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+		ImageValidateCodeFilter validateCodeFilter = new ImageValidateCodeFilter();
 		validateCodeFilter.setFailedHandler(authenticationFailedHandler);
 		validateCodeFilter.setSecurityCoreProperties(securityCoreProperties);
 		validateCodeFilter.afterPropertiesSet();

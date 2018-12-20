@@ -13,7 +13,7 @@ import lombok.Setter;
 public class BrowserSecurityProperties {
 	private String loginPage  = "/login.html";
 	private String loginType = LoginType.REDIRECT;
-	private ValidateCodeProperties image = new ValidateCodeProperties();
+	private ImageValidateCodeProperties image =  new ImageValidateCodeProperties();
 
 	/**
 	 * 默认remember-me的时间为6小时

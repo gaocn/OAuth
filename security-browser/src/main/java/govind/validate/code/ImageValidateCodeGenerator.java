@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class ValidateCodeGeneratorImpl implements ValidateCodeGenerator {
+public class ImageValidateCodeGenerator implements ValidateCodeGenerator {
 	@Autowired
 	private SecurityCoreProperties securityCoreProperties;
 

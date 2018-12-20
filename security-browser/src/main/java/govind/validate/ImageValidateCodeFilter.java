@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+public class ImageValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
 	@Setter
 	private AuthenticationFailedHandler failedHandler;
 
@@ -72,7 +72,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 	}
 
 	private void validate(ServletWebRequest request) throws ServletRequestBindingException, ValidateCodeException {
-		ImageCode imageCode = (ImageCode) sessionStrategy.getAttribute(request, ValidateCodeController.SESSION_KEY);
+		ImageCode imageCode = (ImageCode) sessionStrategy.getAttribute(request, ValidateCodeController.SESSION_KEY_IMAGE);
 		String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imagecode");
 
 		if(StringUtils.isBlank(codeInRequest)) {
@@ -90,7 +90,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 		if(!StringUtils.equals(codeInRequest, imageCode.getCode()))  {
 			throw new ValidateCodeException("验证码不匹配！");
 		}
-		sessionStrategy.removeAttribute(request,  ValidateCodeController.SESSION_KEY);
+		sessionStrategy.removeAttribute(request,  ValidateCodeController.SESSION_KEY_IMAGE);
 	}
 
 

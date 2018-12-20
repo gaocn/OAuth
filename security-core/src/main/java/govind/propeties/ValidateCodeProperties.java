@@ -11,14 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ValidateCodeProperties {
 	/**
-	 * 验证码图片宽度
-	 */
-	private int  width = 67;
-	/**
-	 * 验证码图片高度
-	 */
-	private int height = 23;
-	/**
 	 * 验证码长度
 	 */
 	private int length = 4;
@@ -32,4 +24,8 @@ public class ValidateCodeProperties {
 	 * 可以通过配置url自定义哪些接口需要校验验证码
 	 */
 	private String url;
+
+	public ValidateCodeProperties(int length) {
+		this.length = length;
+	}
 }

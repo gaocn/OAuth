@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+	<title>Demo Login Page</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-social.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/templatemo_style.css">
+</head>
+<body class="templatemo-bg-image-1">
+<div class="container">
+	<div class="col-md-12">
+		<form class="form-horizontal templatemo-login-form-2" role="form" action="/authentication/form" method="post">
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Sign In</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="templatemo-one-signin col-md-6">
+					<div class="form-group">
+						<div class="col-md-12">
+							<label for="mobile" class="control-label">Phone Number</label>
+							<div class="templatemo-input-icon-container">
+								<input type="text" class="form-control" name="mobile" id="mobile" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<label for="smscode" class="control-label">SMS Code</label>
+							<div class="templatemo-input-icon-container">
+								<input type="text" class="form-control" name="smscode"  id="smscode" placeholder="">
+								<a href="/code/sms">发送验证码</a>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox"  name="remember-me"> Remember me
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="submit" value="LOG IN" class="btn btn-warning">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<a href="forgot-password.html" class="text-center">Cannot login?</a>
+						</div>
+					</div>
+				</div>
+				<div class="templatemo-other-signin col-md-6">
+					<label class="margin-bottom-15">
+						One-click sign in using other services. Credit goes to <a rel="nofollow" href="http://lipis.github.io/bootstrap-social/">Bootstrap Social</a> for social sign in buttons.
+					</label>
+					<a class="btn btn-block btn-social btn-facebook margin-bottom-15">
+						 Sign in with Facebook
+					</a>
+					<a class="btn btn-block btn-social btn-twitter margin-bottom-15">
+						 Sign in with Twitter
+					</a>
+					<a class="btn btn-block btn-social btn-google-plus">
+						 Sign in with Google
+					</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>
