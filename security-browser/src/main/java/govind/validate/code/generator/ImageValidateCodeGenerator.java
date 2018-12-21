@@ -1,8 +1,9 @@
-package govind.validate.code;
+package govind.validate.code.generator;
 
 import govind.propeties.SecurityCoreProperties;
 import govind.validate.ImageCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,7 @@ public class ImageValidateCodeGenerator implements ValidateCodeGenerator {
 	private SecurityCoreProperties securityCoreProperties;
 
 	@Override
-	public ImageCode generate() {
+	public ImageCode generate(ServletWebRequest request) {
 		int width = securityCoreProperties.getBrowser().getImage().getWidth();
 		int height = securityCoreProperties.getBrowser().getImage().getHeight();
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

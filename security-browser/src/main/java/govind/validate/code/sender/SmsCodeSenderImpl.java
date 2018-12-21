@@ -1,4 +1,4 @@
-package govind.validate.code;
+package govind.validate.code.sender;
 
 import lombok.extern.slf4j.Slf4j;
 

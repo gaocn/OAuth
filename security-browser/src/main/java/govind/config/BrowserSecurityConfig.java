@@ -3,7 +3,8 @@ package govind.config;
 import govind.handler.AuthenticationFailedHandler;
 import govind.handler.AuthenticationSuccessHandler;
 import govind.propeties.SecurityCoreProperties;
-import govind.validate.ImageValidateCodeFilter;
+import govind.validate.ValidateCodeProcessorHolder;
+import govind.validate.code.filter.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
 
 	@Autowired
+	private ValidateCodeProcessorHolder validateCodeProcessorHolder;
+
+	@Autowired
 	private DataSource dataSource;
 
 	@Autowired
@@ -52,7 +56,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//添加验证码过滤器
-		ImageValidateCodeFilter validateCodeFilter = new ImageValidateCodeFilter();
+		ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+		validateCodeFilter.setValidateCodeProcessorHolder(validateCodeProcessorHolder);
 		validateCodeFilter.setFailedHandler(authenticationFailedHandler);
 		validateCodeFilter.setSecurityCoreProperties(securityCoreProperties);
 		validateCodeFilter.afterPropertiesSet();
@@ -62,7 +67,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 				//自定义登录界面
 				.loginPage("/authentication/require")
 				//自定义登录路径
-				.loginProcessingUrl("/authentication/form")
+				.loginProcessingUrl("/authentication/form*")
 				.successHandler(authenticationSuccessHandler)
 				.failureHandler(authenticationFailedHandler)
 				.and()
@@ -73,7 +78,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 				.antMatchers("/authentication/require",
-						securityCoreProperties.getBrowser().getLoginPage(),"/code/image").permitAll()
+						securityCoreProperties.getBrowser().getLoginPage(),"/code/image","/code/sms","/smsLogin.html").permitAll()
 				.anyRequest()
 				.authenticated()
 				.and()

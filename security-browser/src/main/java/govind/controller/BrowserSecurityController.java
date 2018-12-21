@@ -38,14 +38,14 @@ public class BrowserSecurityController {
 		if (requestCache != null)  {
 			String targetUrl = request1.getRedirectUrl();
 			log.info("引发跳转的请求为：{}", targetUrl);
-			if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")){
+//			if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")){
 				try {
 					log.info("跳转登录页：{}",securityCoreProperties.getBrowser().getLoginPage());
 					redirectStrategy.sendRedirect(request, response, securityCoreProperties.getBrowser().getLoginPage());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
+//			}
 		}
 		return new SimpleResponse("访问的用户需要身份验证，请引导用户到登录页");
 	}
