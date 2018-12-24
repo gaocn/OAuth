@@ -47,7 +47,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 		super.afterPropertiesSet();
 		addToUrlMap(securityCoreProperties.getBrowser().getImage().getUrl(), ValidateCodeType.IMAGE);
 		addToUrlMap("/authentication/form_image",ValidateCodeType.IMAGE);
-		addToUrlMap("/authentication/form_sms",ValidateCodeType.SMS);
+		addToUrlMap("/authentication/mobile",ValidateCodeType.SMS);
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class BrowserSecurityProperties {
 	private ImageValidateCodeProperties image =  new ImageValidateCodeProperties();
 
 	/**
-	 * 默认remember-me的时间为6小时
+	 * 默认remember-me的时间为1小时
 	 */
-	private int rememberMeSeconds = 6 * 3600;
+	private int rememberMeSeconds = 3600;
 }

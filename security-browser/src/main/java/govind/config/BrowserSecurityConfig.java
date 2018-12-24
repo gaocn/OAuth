@@ -43,12 +43,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	@Autowired
+	SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
 		tokenRepository.setDataSource(dataSource);
 		//只能执行一次，用于创建数据库表保存remember-me的用户
-//		tokenRepository.setCreateTableOnStartup(true);
+		/**tokenRepository.setCreateTableOnStartup(true);*/
 		return tokenRepository;
 	}
 
@@ -82,7 +85,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()
 				.authenticated()
 				.and()
-				.csrf().disable();
+				.csrf().disable()
+				.apply(smsCodeAuthenticationSecurityConfig);
 	}
 
 
